@@ -8,7 +8,7 @@ BST* bst_criar() {
     return arv;
 }
 
-No* inserirNo(No *no, int valor) {
+No* inserirNoBST(No *no, int valor) {
     if (no == NULL) {
         No *novo = malloc(sizeof(No));
         novo->chave = valor;
@@ -18,29 +18,29 @@ No* inserirNo(No *no, int valor) {
     }
 
     if (valor < no->chave)
-        no->esq = inserirNo(no->esq, valor);
+        no->esq = inserirNoBST(no->esq, valor);
     else if (valor > no->chave)
-        no->dir = inserirNo(no->dir, valor);
+        no->dir = inserirNoBST(no->dir, valor);
 
     return no;
 }
 
 void bst_inserir(BST *arv, int valor) {
-    arv->raiz = inserirNo(arv->raiz, valor);
+    arv->raiz = inserirNoBST(arv->raiz, valor);
 }
 
-No* buscarNo(No *no, int valor) {
+No* buscarNoBST(No *no, int valor) {
     if (no == NULL)         return NULL;
     if (valor == no->chave) return no;
 
     if (valor < no->chave)
-        return buscarNo(no->esq, valor);
+        return buscarNoBST(no->esq, valor);
     else
-        return buscarNo(no->dir, valor);
+        return buscarNoBST(no->dir, valor);
 }
 
 No* bst_buscar(BST *arv, int valor) {
-    return buscarNo(arv->raiz, valor);
+    return buscarNoBST(arv->raiz, valor);
 }
 
 void preFixado(No *no) {
@@ -82,27 +82,27 @@ void bst_posFixado(BST *arv) {
     printf("\n");
 }
 
-int alturaNo(No *no) {
+int alturaNoBST(No *no) {
     if (no == NULL) return 0;
 
-    int altEsq = alturaNo(no->esq);
-    int altDir = alturaNo(no->dir);
+    int altEsq = alturaNoBST(no->esq);
+    int altDir = alturaNoBST(no->dir);
 
     return 1 + (altEsq > altDir ? altEsq : altDir);
 }
 
 int bst_altura(BST *arv) {
-    return alturaNo(arv->raiz);
+    return alturaNoBST(arv->raiz);
 }
 
-void destruirNo(No *no) {
+void destruirNoBST(No *no) {
     if (no == NULL) return;
-    destruirNo(no->esq);
-    destruirNo(no->dir);
+    destruirNoBST(no->esq);
+    destruirNoBST(no->dir);
     free(no);
 }
 
 void bst_destruir(BST *arv) {
-    destruirNo(arv->raiz);
+    destruirNoBST(arv->raiz);
     free(arv);
 }
